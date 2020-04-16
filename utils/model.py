@@ -1,3 +1,7 @@
+import glob
+import os
+import random
+import string
 from operator import itemgetter
 
 import joblib
@@ -5,15 +9,11 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import confusion_matrix, accuracy_score
 from sklearn.model_selection import cross_validate
 from sklearn.model_selection import train_test_split
+
 from utils.plot import plot_cm
 
-import glob
-import os
-import random
-import string
-
-
 WEIGHTS_DIR = 'weights/'
+
 
 def latest_modified_weight():
     """
@@ -24,6 +24,7 @@ def latest_modified_weight():
     latest = max(weight_files, key=os.path.getctime)
     return latest
 
+
 def load_model(path):
     """
 
@@ -32,7 +33,6 @@ def load_model(path):
     """
     with open(path, 'rb') as f:
         return joblib.load(filename=f)
-
 
 
 def generate_model_name(size=5):
@@ -103,8 +103,7 @@ def cv_method(features, labels):
     return model
 
 
-
-def train_model(features, labels,method):
+def train_model(features, labels, method):
     """
     run appropriate training method
     :param features: 'income'', 'age', 'loan'
@@ -112,12 +111,8 @@ def train_model(features, labels,method):
     :param method: 'cv' for Cross-Validation method , 'split' for train_test_split method
     :return:
     """
-    return training_methods[method](features,labels)
+    return training_methods[method](features, labels)
 
-# def predict_model(model, features, labels):
-#     predictions = model.predict(features)
-#     print(confusion_matrix(labels, predictions))
-#     print(accuracy_score(labels, predictions))
 
 training_methods = {
     'split': split_method,
